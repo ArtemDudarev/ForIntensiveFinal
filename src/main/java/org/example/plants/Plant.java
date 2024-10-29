@@ -1,10 +1,9 @@
 package org.example.plants;
 
-import org.example.Ecosystems.Ecosystem;
-
+import java.io.Serializable;
 import java.util.List;
 
-public class Plant implements Growable {
+public class Plant implements Growable, Serializable {
     private String name;
     private int population;
     private List<String> food;

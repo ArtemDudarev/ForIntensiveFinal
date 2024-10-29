@@ -1,4 +1,4 @@
-package org.example.Ecosystems;
+package org.example.ecosystems;
 
 import org.example.animals.Animal;
 import org.example.animals.Herbivore;
@@ -19,6 +19,8 @@ public class Ecosystem implements Serializable {
     private double humidity;
     private double water;
     private double light;
+
+    private static final Long serialVersionUID = 1L;
 
     public Ecosystem(String name, List<Plant> plants, List<Animal> animals, List<String> resources, double temperature, double humidity, double water, double light) {
         this.name = name;

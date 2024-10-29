@@ -1,4 +1,4 @@
-package org.example.Ecosystems;
+package org.example.ecosystems;
 
 import java.io.*;
 import java.nio.file.Path;

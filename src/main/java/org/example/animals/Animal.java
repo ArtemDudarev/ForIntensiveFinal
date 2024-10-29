@@ -2,9 +2,10 @@ package org.example.animals;
 
 import org.example.plants.Plant;
 
+import java.io.Serializable;
 import java.util.List;
 
-public abstract class Animal<T> implements Eatable<T> {
+public abstract class Animal<T> implements Eatable<T>, Serializable {
     protected String name;
     protected int population;
     protected List<T> food;
