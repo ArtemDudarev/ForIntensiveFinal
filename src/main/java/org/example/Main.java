@@ -91,16 +91,6 @@ public class Main {
         return selectedResources;
     }
 
-//    private static void addPlant(List<Plant> listPlant, Plant plant){
-//
-//        System.out.println("Enter plant population");
-//
-//        Scanner scPlant = new Scanner(System.in);
-//        int population = scPlant.nextInt();
-//        plant.setPopulation(population);
-//        listPlant.add(plant);
-//    }
-
     private static List<Plant> addPlants(Scanner scanner) {
         List<Plant> plants = new ArrayList<>();
         System.out.println("Enter the plants that will be in the ecosystem");
@@ -203,65 +193,66 @@ public class Main {
         // Создание объекта животного и добавление его в список
         switch (choice) {
             // Травоядные
-            case 1:
+            case 1 -> {
                 grasshopper.setPopulation(population);
                 selectedAnimals.add(grasshopper);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 rabbit.setPopulation(population);
                 selectedAnimals.add(rabbit);
-                break;
-            case 3:
+            }
+            case 3 -> {
                 mouse.setPopulation(population);
                 selectedAnimals.add(mouse);
-                break;
-            case 4:
+            }
+            case 4 -> {
                 worm.setPopulation(population);
                 selectedAnimals.add(worm);
-                break;
-            case 5:
+            }
+            case 5 -> {
                 lizard.setPopulation(population);
                 selectedAnimals.add(lizard);
-                break;
-            case 6:
+            }
+
+            case 6 -> {
                 deer.setPopulation(population);
                 selectedAnimals.add(deer);
-                break;
-            case 7:
+            }
+            case 7 -> {
                 elk.setPopulation(population);
                 selectedAnimals.add(elk);
-                break;
+            }
             // Плотоядные
-            case 8:
+            case 8 -> {
                 lynx.setPopulation(population);
                 selectedAnimals.add(lynx);
-                break;
-            case 9:
+            }
+            case 9 -> {
                 fox.setPopulation(population);
                 selectedAnimals.add(fox);
-                break;
-            case 10:
+            }
+            case 10 -> {
                 wolf.setPopulation(population);
                 selectedAnimals.add(wolf);
-                break;
-            case 11:
+            }
+            case 11 -> {
                 bear.setPopulation(population);
                 selectedAnimals.add(bear);
-                break;
-            case 12:
+            }
+            case 12 -> {
                 frog.setPopulation(population);
                 selectedAnimals.add(frog);
-                break;
-            case 13:
+            }
+            case 13 -> {
                 snake.setPopulation(population);
                 selectedAnimals.add(snake);
-                break;
-            case 14:
+            }
+
+            case 14 -> {
                 owl.setPopulation(population);
                 selectedAnimals.add(owl);
-                break;
-            default:
-                System.out.println("Please, enter correct value");
+            }
+            default -> System.out.println("Please, enter correct value");
         }
         return selectedAnimals;
     }
@@ -288,32 +279,6 @@ public class Main {
 
                     // Добавление ресурсов в экосистему
                     newR.addAll(addResources(scanner));
-//                    System.out.println("Enter the resources that will be in the ecosystem");
-//                    int choiceRes = 0;
-//                    while (choiceRes != 2) {
-//
-//                        System.out.println("1. Add new resource");
-//                        System.out.println("2. Don't add and continue");
-//                        choiceRes = scanner.nextInt();
-//                        if (choiceRes != 2) {
-//                            System.out.println("Please, select resource");
-//                            System.out.println("1. nitrogen");
-//                            System.out.println("2. potassium");
-//                            System.out.println("3. sulfur");
-//                            System.out.println("4. magnesium");
-//                            System.out.println("5. phosphorus");
-//
-//                            Scanner scanResource = new Scanner(System.in);
-//                            int res = scanResource.nextInt();
-//                            switch (res) {
-//                                case 1 -> newR.add("nitrogen");
-//                                case 2 -> newR.add("potassium");
-//                                case 3 -> newR.add("sulfur");
-//                                case 4 -> newR.add("magnesium");
-//                                case 5 -> newR.add("phosphorus");
-//                            }
-//                        }
-//                    }
 
                     // Добавление растений в экосистему
 
@@ -321,44 +286,6 @@ public class Main {
                     // У растения меняется популяция на ту, которую указал пользователь.
                     // И растение добавляется в коллекцию, которая потом попадёт в экосистему.
                     newP.addAll(addPlants(scanner));
-//                    System.out.println("Enter the plant that will be in the ecosystem");
-//                    choiceRes = 0;
-//                    while (choiceRes != 2) {
-//
-//                        System.out.println("1. Add new plant");
-//                        System.out.println("2. Don't add and continue");
-//                        choiceRes = scanner.nextInt();
-//                        if (choiceRes != 2) {
-//
-//                            Scanner scanPlant = new Scanner(System.in);
-//
-//                            System.out.println("Select the plant you want to add");
-//                            System.out.println("1. grass");
-//                            System.out.println("2. carrot");
-//                            System.out.println("3. corn");
-//                            System.out.println("4. tree");
-//                            System.out.println("5. berries");
-//
-//                            int choice = scanPlant.nextInt();
-//
-//                            // Выбор растений
-//                            switch (choice) {
-//                                //создание травы
-//                                case 1 -> addPlant(newP,grass);
-//                                //создание моркови
-//                                case 2 -> addPlant(newP,carrot);
-//                                //создание кукурузы
-//                                case 3 -> addPlant(newP,corn);
-//                                //создание дерева
-//                                case 4 -> addPlant(newP,tree);
-//                                //создание ягод
-//                                case 5 -> addPlant(newP,berries);
-//                                default ->
-//                                        System.out.println(RED.getColor() + "Please, enter correct value" + NORMAL.getColor());
-//
-//                            }
-//                        }
-//                    }
 
                     // Добавление животных в экосистему
 
@@ -367,123 +294,7 @@ public class Main {
                     // И животное добавляется в коллекцию, которая потом попадёт в экосистему.
 
                     newA.addAll(addAnimals(scanner));
-//                    System.out.println("Enter the animal that will be in the ecosystem");
-//                    choiceRes = 0;
-//                    while (choiceRes != 2) {
-//
-//                        System.out.println("1. Add new animal");
-//                        System.out.println("2. Don't add and continue");
-//                        choiceRes = scanner.nextInt();
-//                        if (choiceRes != 2) {
-//
-//                            System.out.println("Select the animal you want to add");
-//
-//                            List<String> h = Arrays.asList("===Herbivore===", "1. grasshopper", "2. rabbit", "3. mouse", "4. worm", "5. lizard", "6. deer", "7. elk");
-//                            List<String> c = Arrays.asList("===Carnivore===", "8. lynx", "9. fox", "10. wolf", "11. bear", "12. frog", "13. snake", "14. owl");
-//
-//                            int maxLength = Math.max(h.size(), c.size());
-//
-//                            for (int i = 0; i < maxLength; i++) {
-//                                if (i < h.size()) {
-//                                    System.out.printf("%-20s", "\u001B[32m" + h.get(i));
-//                                } else {
-//                                    System.out.printf("%-20s", "");
-//                                }
-//
-//                                if (i < c.size()) {
-//                                    System.out.printf("%s%n", "\u001B[31m" + c.get(i) + "\u001B[0m");
-//                                } else {
-//                                    System.out.printf("%n");
-//                                }
-//                            }
-//
-//                            Scanner scanAnimal = new Scanner(System.in);
-//                            int choice = scanAnimal.nextInt();
-//
-//                            System.out.println("Enter animal population");
-//
-//                            int population = scanAnimal.nextInt();
-//
-//                            // Выбор животного
-//                            switch (choice) {
-//                                // Травоядные
-//                                case 1 -> {
-//                                    grasshopper.setPopulation(population);
-//                                    newA.add(grasshopper);
-//                                    break;
-//                                }
-//                                case 2 -> {
-//                                    rabbit.setPopulation(population);
-//                                    newA.add(rabbit);
-//                                    break;
-//                                }
-//                                case 3 -> {
-//                                    mouse.setPopulation(population);
-//                                    newA.add(mouse);
-//                                    break;
-//                                }
-//                                case 4 -> {
-//                                    worm.setPopulation(population);
-//                                    newA.add(worm);
-//                                    break;
-//                                }
-//                                case 5 -> {
-//                                    lizard.setPopulation(population);
-//                                    newA.add(lizard);
-//                                    break;
-//                                }
-//                                case 6 -> {
-//                                    deer.setPopulation(population);
-//                                    newA.add(deer);
-//                                    break;
-//                                }
-//                                case 7 -> {
-//                                    elk.setPopulation(population);
-//                                    newA.add(elk);
-//                                    break;
-//                                }
-//
-//                                // Плотоядные
-//                                case 8 -> {
-//                                    lynx.setPopulation(population);
-//                                    newA.add(lynx);
-//                                    break;
-//                                }
-//                                case 9 -> {
-//                                    fox.setPopulation(population);
-//                                    newA.add(fox);
-//                                    break;
-//                                }
-//                                case 10 -> {
-//                                    wolf.setPopulation(population);
-//                                    newA.add(wolf);
-//                                    break;
-//                                }
-//                                case 11 -> {
-//                                    bear.setPopulation(population);
-//                                    newA.add(bear);
-//                                    break;
-//                                }
-//                                case 12 -> {
-//                                    frog.setPopulation(population);
-//                                    newA.add(frog);
-//                                    break;
-//                                }
-//                                case 13 -> {
-//                                    snake.setPopulation(population);
-//                                    newA.add(snake);
-//                                    break;
-//                                }
-//                                case 14 -> {
-//                                    owl.setPopulation(population);
-//                                    newA.add(owl);
-//                                    break;
-//                                }
-//                                default ->
-//                                        System.out.println("\u001B[31m" + "Please, enter correct value" + "\u001B[0m");
-//                            }
-//                        }
-//                    }
+
 
                     // Добавление темепратуры экосистемы
                     System.out.println("Enter the ecosystem temperature");
