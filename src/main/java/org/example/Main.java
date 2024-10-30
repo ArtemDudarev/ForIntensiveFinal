@@ -256,6 +256,100 @@ public class Main {
         }
         return selectedAnimals;
     }
+    private static Ecosystem showEcosystem(Scanner scanner) {
+
+        System.out.println("Choose ecosystem: ");
+
+        // Создание списка для выбора экосистемы
+        List<Ecosystem> ecosystems = EcoCRUD.loadEcosystems();
+        int i = 0;
+        for (Ecosystem ecosystem : ecosystems) {
+            i += 1;
+            System.out.println(i + ". " + ecosystem.getName());
+        }
+
+        //вывести последний пункт меню, который сожет вернуть в главное меню
+
+        int choiceEco = scanner.nextInt();
+        scanner.nextLine();
+
+        if (choiceEco <= ecosystems.size() && choiceEco > 0) {
+            Ecosystem selectedEcosystem = ecosystems.get(choiceEco - 1);
+            selectedEcosystem.getInfo();
+
+            // тест
+            selectChanges(selectedEcosystem, scanner);
+            //
+
+            return selectedEcosystem;
+        } else {
+            System.out.println("Invalid ecosystem choice. Please try again.");
+            return null;
+        }
+    }
+
+    private static void addResourcesPlantsAnimals(Ecosystem selectedEcosystem,Scanner scanner){
+        int choiceSubMenu = 0;
+        while (choiceSubMenu != 4) {
+            System.out.println("What do you want to add to ecosystem " + selectedEcosystem.getName() + "?");
+            System.out.println("1. Add resources");
+            System.out.println("2. Add plants");
+            System.out.println("3. Add animals");
+            System.out.println("4. Back");
+            choiceSubMenu = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choiceSubMenu) {
+                case 1 -> {
+                    selectedEcosystem.getResources().addAll(addResources(scanner));
+                    EcoCRUD.updateEco(selectedEcosystem);
+                }
+
+                case 2 -> {
+                    selectedEcosystem.getPlants().addAll(addPlants(scanner));
+                    EcoCRUD.updateEco(selectedEcosystem);
+                }
+                case 3 -> {
+                    selectedEcosystem.getAnimals().addAll(addAnimals(scanner));
+                    EcoCRUD.updateEco(selectedEcosystem);
+                }
+                case 4 -> {
+                    selectChanges(selectedEcosystem,scanner);
+                }
+                default -> System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+    private static void deleteResourcesPlantsAnimals(Ecosystem selectedEcosystem,Scanner scanner){
+
+    }
+    private static void deleteEcosystem(Ecosystem selectedEcosystem){
+
+    }
+    private static void selectChanges(Ecosystem selectedEcosystem, Scanner scanner) {
+
+        // Подменю для выбранной экосистемы
+        int choiceSubMenu = 0;
+        while (choiceSubMenu != 4) {
+            System.out.println("Choose action for ecosystem " + selectedEcosystem.getName() + ":");
+            System.out.println("1. Add resources, plants or animals");
+            System.out.println("2. Delete resources, plants or animals");
+            System.out.println("3. Delete the ecosystem");
+            System.out.println("4. Back");
+            choiceSubMenu = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choiceSubMenu) {
+                case 1 -> addResourcesPlantsAnimals(selectedEcosystem, scanner);
+                case 2 -> deleteResourcesPlantsAnimals(selectedEcosystem, scanner);
+                case 3 -> deleteEcosystem(selectedEcosystem);
+                case 4 -> {
+                    showEcosystem(scanner);
+                }
+                default -> System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -269,6 +363,9 @@ public class Main {
 
             switch (firstChoice) {
                 case 1 -> {
+
+                    // После того, как пользователь вводит имя экосистемы, создаётся пустая экосистема,
+                    // а к этой экосистеме применяются методв add
                     List<Plant> newP = new ArrayList<>();
                     List<Animal> newA = new ArrayList<>();
                     List<String> newR = new ArrayList<>();
@@ -325,26 +422,11 @@ public class Main {
                 }
                 case 2 -> {
 
-                    System.out.println("Choose ecosystem: ");
 
-                    // Созданиие списка для выботра экосистемы
-                    List<Ecosystem> ecosystems = EcoCRUD.loadEcosystems();
-                    int i = 0;
-                    for(Ecosystem ecosystem : ecosystems){
-                        i += 1;
-                        System.out.println(i + ". " + ecosystem.getName());
-                    }
-
-                    int choiceEco = scanner.nextInt();
-
-                    Ecosystem selectedEcosystem = EcoCRUD.findEcoByName(ecosystems.get(choiceEco -1).getName());
-                    selectedEcosystem.getInfo();
-
-
-
-                    // Предложить дополнить чем-то в экосистемы
-                    // Предложить удалить что-то в экосистемы
-                    // Предложить удалить экосистему
+                    selectChanges(showEcosystem(scanner),scanner);
+                    // 1. Предложить дополнить выбранную экосистему ресурсами, растениями или животными
+                    // 2. Предложить удалить ресурсы, растения или животных из выбранной экосистемы
+                    // 3. Предложить удалить выбранную экосистему экосистему
                     break;
                 }
                 case 3 -> {
