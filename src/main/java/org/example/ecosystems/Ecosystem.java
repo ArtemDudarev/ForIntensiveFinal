@@ -1,4 +1,4 @@
-package org.example.Ecosystems;
+package org.example.ecosystems;
 
 import org.example.animals.Animal;
 import org.example.animals.Herbivore;
@@ -19,6 +19,8 @@ public class Ecosystem implements Serializable {
     private double humidity;
     private double water;
     private double light;
+
+    private static final Long serialVersionUID = 1L;
 
     public Ecosystem(String name, List<Plant> plants, List<Animal> animals, List<String> resources, double temperature, double humidity, double water, double light) {
         this.name = name;
@@ -106,18 +108,18 @@ public class Ecosystem implements Serializable {
         animals.stream().forEach(x -> System.out.println("    " + x));
         System.out.println("=====================================\n");
     }
-    public void getStatus(){
-        System.out.println("\n The state of all plants in the ecosystem: ");
-        plants.stream().forEach(x-> System.out.println( "The plant " + x.getName()+ " is " + (x.isGrowing(temperature, humidity, water, light, resources) ? "survived" : "died")));
-        System.out.println("\n The state of all animals in the ecosystem: ");
-
-        // Если растение не выжило, то его необходимо удалить из списка, чтобы животные, которые зависят от него, тоже вымерли
-
-        animals.stream().forEach(x ->  {
-            String result = (x instanceof Herbivore ? x.isEating(temperature, water, plants) : x.isEating(temperature, water, animals)) ? "survived" : "died";
-            System.out.println("The animal " + x.getName()+ " is " + result);
-        });
-    }
+//    public void getStatus(){
+//        System.out.println("\n The state of all plants in the ecosystem: ");
+//        plants.stream().forEach(x-> System.out.println( "The plant " + x.getName()+ " is " + (x.isGrowing(temperature, humidity, water, light, resources) ? "survived" : "died")));
+//        System.out.println("\n The state of all animals in the ecosystem: ");
+//
+//        // Если растение не выжило, то его необходимо удалить из списка, чтобы животные, которые зависят от него, тоже вымерли
+//
+//        animals.stream().forEach(x ->  {
+//            String result = (x instanceof Herbivore ? x.isEating(temperature, water, plants) : x.isEating(temperature, water, animals)) ? "survived" : "died";
+//            System.out.println("The animal " + x.getName()+ " is " + result);
+//        });
+//    }
 
     public void startIteration(){
         List<Plant> forRemovingPlants = new ArrayList<>();
