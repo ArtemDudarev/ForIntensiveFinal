@@ -1,6 +1,7 @@
 package org.example.ecosystems;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -20,9 +21,11 @@ public class EcoCRUD {
         return null;
     }
 
-    public static List<Ecosystem> loadEcosystems(){
-        try(ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(ECO_FILE.toFile()))) {
+    public static List<Ecosystem> loadEcosystems() {
+
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(ECO_FILE.toFile()))) {
             ecosystems = (List<Ecosystem>) objectInputStream.readObject();
+            //ecosystems.addAll((List<Ecosystem>) objectInputStream.readObject());
         } catch (FileNotFoundException e) {
             System.out.println("File is not found " + e.getMessage());
         } catch (IOException e) {
@@ -30,6 +33,7 @@ public class EcoCRUD {
         } catch (ClassNotFoundException e) {
             System.out.println("Class not found " + e.getMessage());
         }
+
         return ecosystems;
     }
 

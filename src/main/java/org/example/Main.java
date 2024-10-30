@@ -270,7 +270,7 @@ public class Main {
             System.out.println(i + ". " + ecosystem.getName());
         }
 
-        // Вывести последний пункт меню, который сможет вернуть в главное меню
+        // Выведение последнего пункта в меню, который сможет вернуть в главное меню
         i += 1;
         System.out.println(i + ". Back to main menu");
 
@@ -452,24 +452,37 @@ public class Main {
         showEcosystem(scanner);
     }
 
+    private static void specifyQuantityIteration(Ecosystem selectedEcosystem, Scanner scanner){
+            System.out.println("Enter the desired number of iterations: ");
+            int iterations = scanner.nextInt();
+            scanner.nextLine(); // Consume newline character
+
+            for (int i = 0; i < iterations; i++) {
+                System.out.println("\nIteration " + (i + 1) + ":");
+                selectedEcosystem.startIteration();
+                EcoCRUD.updateEco(selectedEcosystem);
+            }
+    }
     private static void selectChanges(Ecosystem selectedEcosystem, Scanner scanner) {
 
         // Подменю для выбранной экосистемы
         int choiceSubMenu = 0;
-        while (choiceSubMenu != 4) {
+        while (choiceSubMenu != 5) {
             System.out.println("Choose action for ecosystem " + selectedEcosystem.getName() + ":");
-            System.out.println("1. Add resources, plants or animals");
-            System.out.println("2. Delete resources, plants or animals");
-            System.out.println("3. Delete the ecosystem");
-            System.out.println("4. Back");
+            System.out.println("1. Start iterations");
+            System.out.println("2. Add resources, plants or animals");
+            System.out.println("3. Delete resources, plants or animals");
+            System.out.println("4. Delete the ecosystem");
+            System.out.println("5. Back");
             choiceSubMenu = scanner.nextInt();
             scanner.nextLine();
 
             switch (choiceSubMenu) {
-                case 1 -> addResourcesPlantsAnimals(selectedEcosystem, scanner);
-                case 2 -> deleteResourcesPlantsAnimals(selectedEcosystem, scanner);
-                case 3 -> deleteSelectedEcosystem(selectedEcosystem, scanner);
-                case 4 -> showEcosystem(scanner);
+                case 1 -> specifyQuantityIteration(selectedEcosystem, scanner);
+                case 2 -> addResourcesPlantsAnimals(selectedEcosystem, scanner);
+                case 3 -> deleteResourcesPlantsAnimals(selectedEcosystem, scanner);
+                case 4 -> deleteSelectedEcosystem(selectedEcosystem, scanner);
+                case 5 -> showEcosystem(scanner);
                 default -> System.out.println("Invalid choice. Please try again.");
             }
         }
@@ -538,19 +551,18 @@ public class Main {
                     EcoCRUD.saveEcosystem(ecosystem);
 
                     ecosystem.getInfo();
-//                    ecosystem.startIteration();
-//                    ecosystem.startIteration();
-//                    ecosystem.getInfo();
-
                     break;
                 }
                 case 2 -> {
                     Ecosystem selectedEcosystem = showEcosystem(scanner);
 
-                    // рботает немного не корректно
                     if (selectedEcosystem != null) {
-                        selectChanges(showEcosystem(scanner),scanner);
+                        selectChanges(selectedEcosystem,scanner);
                     }
+                    // рботает немного не корректно
+//                    if (selectedEcosystem != null) {
+//                        selectChanges(showEcosystem(scanner),scanner);
+//                    }
                     //selectChanges(showEcosystem(scanner),scanner);
                     // 1. Предложить дополнить выбранную экосистему ресурсами, растениями или животными
                     // 2. Предложить удалить ресурсы, растения или животных из выбранной экосистемы
