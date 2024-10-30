@@ -175,12 +175,12 @@ public class Main {
         int maxLength = Math.max(herbivores.size(), carnivores.size());
         for (int i = 0; i < maxLength; i++) {
             if (i < herbivores.size()) {
-                System.out.printf("%-20s", "\u001B[32m" + herbivores.get(i));
+                System.out.printf("%-20s", GREEN.getColor() + herbivores.get(i));
             } else {
                 System.out.printf("%-20s", "");
             }
             if (i < carnivores.size()) {
-                System.out.printf("%s%n", "\u001B[31m" + carnivores.get(i) + "\u001B[0m");
+                System.out.printf("%s%n", RED.getColor() + carnivores.get(i) + NORMAL.getColor());
             } else {
                 System.out.printf("%n");
             }
@@ -256,6 +256,8 @@ public class Main {
         }
         return selectedAnimals;
     }
+
+    // Выводит список экосистем и возвращает выбранную
     private static Ecosystem showEcosystem(Scanner scanner) {
 
         System.out.println("Choose ecosystem: ");
@@ -268,7 +270,9 @@ public class Main {
             System.out.println(i + ". " + ecosystem.getName());
         }
 
-        //вывести последний пункт меню, который сожет вернуть в главное меню
+        // Вывести последний пункт меню, который сможет вернуть в главное меню
+        i += 1;
+        System.out.println(i + ". Back to main menu");
 
         int choiceEco = scanner.nextInt();
         scanner.nextLine();
@@ -277,11 +281,12 @@ public class Main {
             Ecosystem selectedEcosystem = ecosystems.get(choiceEco - 1);
             selectedEcosystem.getInfo();
 
-            // тест
             selectChanges(selectedEcosystem, scanner);
-            //
 
             return selectedEcosystem;
+        } else if (choiceEco == i) {
+            // Вернуться к главному меню
+            return null;
         } else {
             System.out.println("Invalid ecosystem choice. Please try again.");
             return null;
@@ -313,19 +318,140 @@ public class Main {
                     selectedEcosystem.getAnimals().addAll(addAnimals(scanner));
                     EcoCRUD.updateEco(selectedEcosystem);
                 }
-                case 4 -> {
-                    selectChanges(selectedEcosystem,scanner);
-                }
+                case 4 -> selectChanges(selectedEcosystem,scanner);
                 default -> System.out.println("Invalid choice. Please try again.");
             }
         }
     }
-    private static void deleteResourcesPlantsAnimals(Ecosystem selectedEcosystem,Scanner scanner){
 
-    }
-    private static void deleteEcosystem(Ecosystem selectedEcosystem){
+    private static void deleteResourcesPlantsAnimals(Ecosystem selectedEcosystem, Scanner scanner) {
+        int choiceSubMenu = 0;
+        while (choiceSubMenu != 4) {
+            System.out.println("What do you want to delete from ecosystem " + selectedEcosystem.getName() + "?");
+            System.out.println("1. Delete resources");
+            System.out.println("2. Delete plants");
+            System.out.println("3. Delete animals");
+            System.out.println("4. Back");
+            choiceSubMenu = scanner.nextInt();
+            scanner.nextLine();
 
+            switch (choiceSubMenu) {
+                case 1 -> {
+                    deleteResources(selectedEcosystem, scanner);
+                    EcoCRUD.updateEco(selectedEcosystem);
+                }
+                case 2 -> {
+                    deletePlants(selectedEcosystem, scanner);
+                    EcoCRUD.updateEco(selectedEcosystem);
+                }
+                case 3 -> {
+                    deleteAnimals(selectedEcosystem, scanner);
+                    EcoCRUD.updateEco(selectedEcosystem);
+                }
+                case 4 -> selectChanges(selectedEcosystem,scanner);
+                default -> System.out.println("Invalid choice. Please try again.");
+            }
+        }
     }
+
+    // Метод для удаления ресурсов
+    private static void deleteResources(Ecosystem ecosystem, Scanner scanner) {
+        List<String> resources = ecosystem.getResources();
+        if (resources.isEmpty()) {
+            System.out.println("Ecosystem has not resources");
+            return;
+        }
+
+        System.out.println("Current resources: " + resources);
+
+        // Вывод списка ресурсов для выбора
+        System.out.println("Select resource to delete:");
+        int i = 0;
+        for (String resource : resources) {
+            i += 1;
+            System.out.println(i + ". " + resource);
+        }
+
+        // Выбор ресурса
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        if (choice <= resources.size() && choice > 0) {
+            String resourceToDelete = resources.get(choice - 1);
+            ecosystem.getResources().remove(resourceToDelete);
+            System.out.println("Resource " + resourceToDelete + " deleted successfully.");
+        } else {
+            System.out.println("Invalid choice. Please try again.");
+        }
+    }
+
+    // Метод для удаления растений
+    private static void deletePlants(Ecosystem ecosystem, Scanner scanner) {
+        List<Plant> plants = ecosystem.getPlants();
+        if (plants.isEmpty()) {
+            System.out.println("There are no plants in this ecosystem.");
+            return;
+        }
+
+        // Вывод списка растений
+        System.out.println("Current plants: ");
+        int i = 0;
+        for (Plant plant : plants) {
+            i += 1;
+            System.out.println(i + ". " + plant.getName() + " | population: " + plant.getPopulation());
+        }
+
+        // Вывод списка растений для выбора
+        System.out.println("Select plant to delete:");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        if (choice <= plants.size() && choice > 0) {
+            Plant plantToDelete = plants.get(choice - 1);
+            ecosystem.getPlants().remove(plantToDelete);
+            System.out.println("Plant " + plantToDelete.getName() + " deleted successfully.");
+        } else {
+            System.out.println("Invalid choice. Please try again.");
+        }
+    }
+
+    // Метод для удаления животных
+    private static void deleteAnimals(Ecosystem ecosystem, Scanner scanner) {
+        List<Animal> animals = ecosystem.getAnimals();
+        if (animals.isEmpty()) {
+            System.out.println("There are no animals in this ecosystem.");
+            return;
+        }
+
+        // Вывод списка животных
+        System.out.println("Current animals: ");
+        int i = 0;
+        for (Animal animal : animals) {
+            i += 1;
+            System.out.println(i + ". " + animal.getName());
+        }
+
+        // Выбор животного
+        System.out.println("Select animal to delete: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Consume newline character
+
+        if (choice <= animals.size() && choice > 0) {
+            Animal animalToDelete = animals.get(choice - 1);
+            ecosystem.getAnimals().remove(animalToDelete);
+            System.out.println("Animal " + animalToDelete.getName() + " deleted successfully.");
+        } else {
+            System.out.println("Invalid choice. Please try again.");
+        }
+    }
+
+    // Удаление экосистемы
+    private static void deleteSelectedEcosystem(Ecosystem ecosystem, Scanner scanner){
+        EcoCRUD.deleteEco(ecosystem);
+        System.out.println(RED.getColor() + "Ecosystem " + ecosystem.getName() + " is deleted" + NORMAL.getColor());
+        showEcosystem(scanner);
+    }
+
     private static void selectChanges(Ecosystem selectedEcosystem, Scanner scanner) {
 
         // Подменю для выбранной экосистемы
@@ -342,10 +468,8 @@ public class Main {
             switch (choiceSubMenu) {
                 case 1 -> addResourcesPlantsAnimals(selectedEcosystem, scanner);
                 case 2 -> deleteResourcesPlantsAnimals(selectedEcosystem, scanner);
-                case 3 -> deleteEcosystem(selectedEcosystem);
-                case 4 -> {
-                    showEcosystem(scanner);
-                }
+                case 3 -> deleteSelectedEcosystem(selectedEcosystem, scanner);
+                case 4 -> showEcosystem(scanner);
                 default -> System.out.println("Invalid choice. Please try again.");
             }
         }
@@ -414,16 +538,20 @@ public class Main {
                     EcoCRUD.saveEcosystem(ecosystem);
 
                     ecosystem.getInfo();
-                    ecosystem.startIteration();
-                    ecosystem.startIteration();
-                    ecosystem.getInfo();
+//                    ecosystem.startIteration();
+//                    ecosystem.startIteration();
+//                    ecosystem.getInfo();
 
                     break;
                 }
                 case 2 -> {
+                    Ecosystem selectedEcosystem = showEcosystem(scanner);
 
-
-                    selectChanges(showEcosystem(scanner),scanner);
+                    // рботает немного не корректно
+                    if (selectedEcosystem != null) {
+                        selectChanges(showEcosystem(scanner),scanner);
+                    }
+                    //selectChanges(showEcosystem(scanner),scanner);
                     // 1. Предложить дополнить выбранную экосистему ресурсами, растениями или животными
                     // 2. Предложить удалить ресурсы, растения или животных из выбранной экосистемы
                     // 3. Предложить удалить выбранную экосистему экосистему
