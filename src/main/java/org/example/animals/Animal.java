@@ -12,7 +12,7 @@ public abstract class Animal<T> implements Eatable<T>, Serializable {
     protected double optimalTemp;
     protected double optimalWater;
 
-    public Animal(String name, int population, List<T> food, double optimalTemp, double optimalWater) {
+    protected Animal(String name, int population, List<T> food, double optimalTemp, double optimalWater) {
         this.name = name;
         this.population = population;
         this.food = food;

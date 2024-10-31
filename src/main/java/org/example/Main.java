@@ -86,7 +86,7 @@ public class Main {
             case 3 -> selectedResources.add("sulfur");
             case 4 -> selectedResources.add("magnesium");
             case 5 -> selectedResources.add("phosphorus");
-            default -> System.out.println("Invalid choice. Please try again.");
+            default -> System.out.println( RED.getColor() + "Invalid choice. Please try again." + NORMAL.getColor());
         }
         return selectedResources;
     }
@@ -143,7 +143,7 @@ public class Main {
                 selectedPlants.add(berries);
                 break;
             default:
-                System.out.println("Please, enter correct value");
+                System.out.println(RED.getColor() + "Please, enter correct value" + NORMAL.getColor());
         }
         return selectedPlants;
     }
@@ -252,7 +252,7 @@ public class Main {
                 owl.setPopulation(population);
                 selectedAnimals.add(owl);
             }
-            default -> System.out.println("Please, enter correct value");
+            default -> System.out.println(RED.getColor() + "Please, enter correct value" + NORMAL.getColor());
         }
         return selectedAnimals;
     }
@@ -288,7 +288,7 @@ public class Main {
             // Вернуться к главному меню
             return null;
         } else {
-            System.out.println("Invalid ecosystem choice. Please try again.");
+            System.out.println(RED.getColor() + "Invalid ecosystem choice. Please try again." + NORMAL.getColor());
             return null;
         }
     }
@@ -319,7 +319,7 @@ public class Main {
                     EcoCRUD.updateEco(selectedEcosystem);
                 }
                 case 4 -> selectChanges(selectedEcosystem,scanner);
-                default -> System.out.println("Invalid choice. Please try again.");
+                default -> System.out.println(RED.getColor() + "Invalid choice. Please try again." + NORMAL.getColor());
             }
         }
     }
@@ -349,7 +349,8 @@ public class Main {
                     EcoCRUD.updateEco(selectedEcosystem);
                 }
                 case 4 -> selectChanges(selectedEcosystem,scanner);
-                default -> System.out.println("Invalid choice. Please try again.");
+                default -> System.out.println(RED.getColor() + "Invalid choice. Please try again." + NORMAL.getColor());
+
             }
         }
     }
@@ -381,7 +382,7 @@ public class Main {
             ecosystem.getResources().remove(resourceToDelete);
             System.out.println("Resource " + resourceToDelete + " deleted successfully.");
         } else {
-            System.out.println("Invalid choice. Please try again.");
+            System.out.println(RED.getColor() + "Invalid choice. Please try again." + NORMAL.getColor());
         }
     }
 
@@ -411,7 +412,7 @@ public class Main {
             ecosystem.getPlants().remove(plantToDelete);
             System.out.println("Plant " + plantToDelete.getName() + " deleted successfully.");
         } else {
-            System.out.println("Invalid choice. Please try again.");
+            System.out.println(RED.getColor() + "Invalid choice. Please try again." + NORMAL.getColor());
         }
     }
 
@@ -441,7 +442,7 @@ public class Main {
             ecosystem.getAnimals().remove(animalToDelete);
             System.out.println("Animal " + animalToDelete.getName() + " deleted successfully.");
         } else {
-            System.out.println("Invalid choice. Please try again.");
+            System.out.println(RED.getColor() + "Invalid choice. Please try again." + NORMAL.getColor());
         }
     }
 
@@ -483,13 +484,14 @@ public class Main {
                 case 3 -> deleteResourcesPlantsAnimals(selectedEcosystem, scanner);
                 case 4 -> deleteSelectedEcosystem(selectedEcosystem, scanner);
                 case 5 -> showEcosystem(scanner);
-                default -> System.out.println("Invalid choice. Please try again.");
+                default -> System.out.println(RED.getColor() + "Invalid choice. Please try again." + NORMAL.getColor());
             }
         }
     }
 
     public static void main(String[] args) {
 
+        EcoCRUD.loadEcosystems();
         while (true) {
 
             // Создание меню
@@ -529,7 +531,6 @@ public class Main {
 
                     newA.addAll(addAnimals(scanner));
 
-
                     // Добавление темепратуры экосистемы
                     System.out.println("Enter the ecosystem temperature");
                     Scanner scanEcoValue = new Scanner(System.in);
@@ -559,22 +560,15 @@ public class Main {
                     if (selectedEcosystem != null) {
                         selectChanges(selectedEcosystem,scanner);
                     }
-                    // рботает немного не корректно
 //                    if (selectedEcosystem != null) {
 //                        selectChanges(showEcosystem(scanner),scanner);
 //                    }
-                    //selectChanges(showEcosystem(scanner),scanner);
-                    // 1. Предложить дополнить выбранную экосистему ресурсами, растениями или животными
-                    // 2. Предложить удалить ресурсы, растения или животных из выбранной экосистемы
-                    // 3. Предложить удалить выбранную экосистему экосистему
-                    break;
                 }
                 case 3 -> {
                     // информация о работе с программой
                 }
                 case 4 -> {
                     System.exit(0);
-                    break;
                 }
                 default -> {
                     System.out.println(RED.getColor() + "Please, enter correct value" + NORMAL.getColor());
