@@ -1,5 +1,6 @@
 package org.example.ecosystems;
 
+import org.example.LogFile;
 import org.example.animals.Animal;
 import org.example.animals.Herbivore;
 import org.example.plants.Plant;
@@ -108,18 +109,6 @@ public class Ecosystem implements Serializable {
         animals.stream().forEach(x -> System.out.println("    " + x));
         System.out.println("=====================================\n");
     }
-//    public void getStatus(){
-//        System.out.println("\n The state of all plants in the ecosystem: ");
-//        plants.stream().forEach(x-> System.out.println( "The plant " + x.getName()+ " is " + (x.isGrowing(temperature, humidity, water, light, resources) ? "survived" : "died")));
-//        System.out.println("\n The state of all animals in the ecosystem: ");
-//
-//        // Если растение не выжило, то его необходимо удалить из списка, чтобы животные, которые зависят от него, тоже вымерли
-//
-//        animals.stream().forEach(x ->  {
-//            String result = (x instanceof Herbivore ? x.isEating(temperature, water, plants) : x.isEating(temperature, water, animals)) ? "survived" : "died";
-//            System.out.println("The animal " + x.getName()+ " is " + result);
-//        });
-//    }
 
     public void startIteration(){
         List<Plant> forRemovingPlants = new ArrayList<>();
@@ -131,15 +120,18 @@ public class Ecosystem implements Serializable {
             // Проверка на возможность расти популяции
             if(x.isGrowing(temperature, humidity, water, light, resources)){
                 x.setPopulation(x.getPopulation() + 50);
+                LogFile.log("Ecosystem: " + name + " | " + x.getName() + " population is increasing" + " | " + "population: " + x.getPopulation());
                 System.out.println(x.getName() + " population " + GREEN.getColor() + "is increasing" + NORMAL.getColor());
             }
             else {
                 x.setPopulation(x.getPopulation() - 50);
                 if(x.getPopulation() <= 0){
                     forRemovingPlants.add(x);
+                    LogFile.log("Ecosystem: " + name + " | " + x.getName() + " died");
                     System.out.println(x.getName() + RED.getColor() + " died" + NORMAL.getColor());
                 }
                 else {
+                    LogFile.log("Ecosystem: " + name + " | " + x.getName() + " population is declining" + " | " + "population: " + x.getPopulation());
                     System.out.println(x.getName() + " population " + YELLOW.getColor() + "is declining" + NORMAL.getColor());
                 }
             }
@@ -170,17 +162,5 @@ public class Ecosystem implements Serializable {
         animals.removeAll(forRemovingAnimals);
 
         System.out.println("================\n");
-    }
-    public void predictPopulationChange(Plant plant) {
-        // Прогнозирует изменение популяции растения
-    }
-
-    public void predictPopulationChange(Animal animal) {
-        // Прогнозирует изменение популяции животного
-    }
-
-    public void updateEcosystem() {
-        // Обновляет состояние экосистемы (рост растений, охота животных,
-        // изменение климатических условий)
     }
 }
